@@ -1,0 +1,116 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Colour Book Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #f0f8ff;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    .controls {
+      margin-bottom: 20px;
+    }
+
+    .color-palette {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .color {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 2px solid #444;
+      cursor: pointer;
+    }
+
+    .size-controls {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    svg {
+      width: 80%;
+      max-width: 500px;
+      height: auto;
+      border: 2px solid #000;
+    }
+
+    path, circle {
+      fill: white;
+      stroke: black;
+      stroke-width: 2;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎨 Colour Book Game</h1>
+
+  <div class="controls">
+    <div class="color-palette">
+      <div class="color" style="background:red;" data-color="red"></div>
+      <div class="color" style="background:blue;" data-color="blue"></div>
+      <div class="color" style="background:green;" data-color="green"></div>
+      <div class="color" style="background:orange;" data-color="orange"></div>
+      <div class="color" style="background:purple;" data-color="purple"></div>
+    </div>
+
+    <div class="size-controls">
+      <button onclick="resizeSVG(1.2)">Zoom In</button>
+      <button onclick="resizeSVG(0.8)">Zoom Out</button>
+      <button onclick="resetSVG()">Reset Size</button>
+    </div>
+  </div>
+
+  <div id="svg-container">
+    <svg id="drawing" viewBox="0 0 200 200">
+      <path d="M100,50 C120,30 140,50 120,70 C140,90 120,110 100,90 C80,110 60,90 80,70 C60,50 80,30 100,50 Z" />
+      <circle cx="100" cy="70" r="10" />
+    </svg>
+  </div>
+
+  <script>
+    let currentColor = "red";
+    let svg = document.getElementById("drawing");
+    let scale = 1;
+
+    document.querySelectorAll(".color").forEach(c => {
+      c.addEventListener("click", () => {
+        currentColor = c.getAttribute("data-color");
+      });
+    });
+
+    document.querySelectorAll("path, circle").forEach(shape => {
+      shape.addEventListener("click", () => {
+        shape.setAttribute("fill", currentColor);
+      });
+    });
+
+    function resizeSVG(factor) {
+      scale *= factor;
+      svg.style.transform = `scale(${scale})`;
+    }
+
+    function resetSVG() {
+      scale = 1;
+      svg.style.transform = "scale(1)";
+    }
+  </script>
+</body>
+</html>
